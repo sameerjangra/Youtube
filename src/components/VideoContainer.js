@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { YOUTUBE_API } from '../utils/Constant';
 import VideoCard from './VideoCard';
 import { Link } from 'react-router-dom';
+import Shimmer from './Shimmer'; // 👈 Import this at the top
 
 const VideoContainer = () => {
   const [videos, setVideos] = useState([]);
@@ -27,9 +28,9 @@ const VideoContainer = () => {
       setError("Failed to load videos.");
     }
   };
-
   if (error) return <div className="text-red-500 ml-44 mt-10">{error}</div>;
-  if (!videos || videos.length === 0) return <div className="text-white ml-44 mt-10">Loading...</div>;
+  if (!videos || videos.length === 0) return <Shimmer />; // 👈 Use shimmer here
+  
 
   return (
     <div className="flex flex-wrap ml-44">

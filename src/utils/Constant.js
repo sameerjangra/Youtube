@@ -7,3 +7,5 @@ export const  YOUTUBE_SEARCH_API =`https://youtube.googleapis.com/youtube/v3/sea
 // https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=coding+tutorials&key=AIzaSyBTI_pTSMUNAGpYRTNycSMTYuCH85JOMAE
 
 export const RELATED_VIDEO_API = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&type=video&key=${GOOGLE_API_KEY}&relatedToVideoId=`;
+
+export const COMMENT_API = `https://www.googleapis.com/youtube/v3/commentThreads?part=snippet,replies&maxResults=68&key=${GOOGLE_API_KEY}`;

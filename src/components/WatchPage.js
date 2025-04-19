@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { closeMenu } from '../utils/appSlice';
 import { useSearchParams, useLocation, useNavigate } from 'react-router-dom';
-import { GOOGLE_API_KEY, YOUTUBE_API } from '../utils/Constant';
+import { GOOGLE_API_KEY, YOUTUBE_API ,COMMENT_API} from '../utils/Constant';
 import { formatViews, formatTimeAgo } from '../utils/formatHelpers';
 import { BiLike, BiDislike, BiSolidLike } from "react-icons/bi";
 import { PiShareFatThin, PiScissorsLight } from "react-icons/pi";
 import { GoBookmark } from "react-icons/go";
+import Comment from './Comment';
 
 const WatchPage = () => {
   const location = useLocation();
@@ -15,6 +16,7 @@ const WatchPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [comments, setComments] = useState([]);
   const [liked, setLiked] = useState(false);
   const [videoData, setVideoData] = useState(location.state?.video || null);
   const [channelData, setChannelData] = useState(null);
@@ -28,12 +30,27 @@ const WatchPage = () => {
     if (!videoData) fetchVideoData();
     else fetchChannelData(videoData.snippet.channelId);
     fetchRelatedVideos();
+    commentData();
+
   }, [dispatch, videoId]);
 
   const handleLikeToggle = () => {
     setLiked(prev => !prev);
   };
 
+  const commentData = async () => {
+    if (!videoId) return;
+  
+    const commentURL = `${COMMENT_API}&videoId=${videoId}`;
+    try {
+      const response = await fetch(commentURL);
+      const data = await response.json();
+      setComments(data.items || []);
+    } catch (error) {
+      console.error("Failed to fetch comments", error);
+    }
+  };
+  
   const fetchVideoData = async () => {
     if (!videoId) {
       setError("Video ID not found");
@@ -86,11 +103,13 @@ const WatchPage = () => {
       console.error("Failed to fetch related videos", err);
     }
   };
+  
+
 
   if (loading) return <div className="text-white text-center mt-5">Loading...</div>;
   if (error) return <div className="text-red-500 text-center mt-5">{error}</div>;
   return (
-    <div className="bg-black w-full min-h-screen text-white px-6 py-4 grid grid-cols-10 gap-6">
+    <div className="bg-black w-full min-h-screen text-white px-6 py-4 grid grid-cols-10 gap-6 ">
       {/* Left Side - Video Player and Info */}
       <div className="col-span-7">
         <iframe
@@ -182,7 +201,18 @@ const WatchPage = () => {
             {showFullDescription ? 'Show Less' : 'Show More'}
           </p>
         </div>
+         {/* Comment Section */}
+<div className='p-2 mt-6 '>
+  <h2 className="text-lg font-semibold mb-4">Comments</h2>
+  {comments.length === 0 ? (
+    <p className="text-gray-400">No comments available.</p>
+  ) : (
+    comments.map((comment) => <Comment key={comment.id} comment={comment} />)
+  )}
+</div>
+
       </div>
+    
 
       {/* Right Side - Recommended Videos */}
       <div className="col-span-3 overflow-hidden">
@@ -204,8 +234,8 @@ const WatchPage = () => {
                 />
                <div className="flex flex-col text-sm">
   <p className="text-white font-medium text-sm">
-    {title.split(' ').slice(0, 20).join(' ')}
-    {title.split(' ').length > 20 && '...'}
+    {title.split(' ').slice(0, 7).join(' ')}
+    {title.split(' ').length > 7 && '...'}
   </p>
   <p className="text-gray-400 text-xs">{channelTitle}</p>
   <p className="text-gray-500 text-xs">{formatTimeAgo(publishedAt)}</p>
