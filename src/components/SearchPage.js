@@ -14,7 +14,7 @@ const SearchPage = () => {
   return (
     <div className='bg-customBlack min-h-screen'>
       <ButtonList />
-      <div className='w-[87%] ml-[13%] px-6 py-4'>
+      <div className='w-[87%]  px-6 py-4'>
         {results.map((item, index) => {
           const { thumbnails, title, description, channelTitle, publishedAt } = item.snippet;
           const videoId = item.id?.videoId || item.id; // handle both formats

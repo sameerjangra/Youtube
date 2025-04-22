@@ -8,7 +8,7 @@ const ButtonList = () => {
   ]
 
   return (
-<div className="flex overflow-x-auto scrollbar-hide whitespace-nowrap p-4 space-x-2 md:ml-44 ml-2">
+<div className="flex overflow-x-auto scrollbar-hide whitespace-nowrap p-4 space-x-2 ">
 <button className='px-5 py-2  bg-white rounded-xl'>All</button>
       {list.map((item, index) => (
         <Button key={index} name={item} />

@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 const MinSlidebar = () => {
 
   return (
-    <div className='w-15 p-4 bg-customBlack text-white '>
+    <div className='w-15 p-4 bg-customBlack text-white flex flex-col mt-20'>
       <div>
         <ul className='p-1'>
           <Link to="/"><li >

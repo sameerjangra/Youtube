@@ -13,8 +13,8 @@ const Slidebar = () => {
     }
 
   return (
-    <div className='w-48 p-5 bg-customBlack text-white fixed '>
-      <div className='border-b-4 border-zinc-700 pb-5'>
+    <div className='w-48 h-full p-5 bg-customBlack text-white flex flex-col mt-20'>
+      <div className='border-b-4 border-zinc-700 pb-5 '>
         <ul className='space-y-3'>
         <Link to="/"><li className='flex items-center space-x-3'>
             <IoMdHome className='text-2xl' /> 
@@ -52,7 +52,7 @@ const Slidebar = () => {
           </li>
         </ul>
       </div>
-    </div>
+      </div>
   )
 }
 

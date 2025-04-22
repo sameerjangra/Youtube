@@ -30,3 +30,7 @@
   max-height: 3.2em; /* Adjust based on font size */
   line-height: 1.6em; /* Ensures two lines before ellipsis */
 }
+
+html, body {
+  overflow: hidden; /* Prevent double scroll */
+}

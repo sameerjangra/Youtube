@@ -109,7 +109,7 @@ const WatchPage = () => {
   if (loading) return <div className="text-white text-center mt-5">Loading...</div>;
   if (error) return <div className="text-red-500 text-center mt-5">{error}</div>;
   return (
-    <div className="bg-black w-full min-h-screen text-white px-6 py-4 grid grid-cols-10 gap-6 ">
+    <div className="bg-customBlack w-full min-h-screen text-white px-6 py-4 grid grid-cols-10 gap-6 ">
       {/* Left Side - Video Player and Info */}
       <div className="col-span-7">
         <iframe
