@@ -16,8 +16,8 @@ const MinSlidebar = () => {
             <span className='text-[10px]'>Home</span>
            </li></Link>
           <li className='mt-6'>
-            <SiYoutubeshorts  className='text-2xl' />
-            <span className='text-[10px]'>Shorts</span>
+          <Link to={"/shorts"}><SiYoutubeshorts  className='text-2xl' />
+            <span className='text-[10px]'>Shorts</span></Link>
             </li>
           <li className='mt-6'> 
           <MdSubscriptions className='text-2xl' />   

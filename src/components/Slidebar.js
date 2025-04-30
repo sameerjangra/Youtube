@@ -19,7 +19,7 @@ const Slidebar = () => {
             <ul className='space-y-3'>
               <Link to="/"><li className='flex items-center space-x-3'><IoMdHome className='text-2xl' /><span>Home</span></li></Link>
               <li className='flex items-center space-x-3'><SiYoutubeshorts className='text-2xl' /><Link to={"/shorts"}><span>Shorts</span></Link></li>
-              <li className='flex items-center space-x-3'><Link to={"/demo"}><span>Demo Page</span></Link></li>
+             
               <li className='flex items-center space-x-3'><MdSubscriptions className='text-2xl' /><span>Subscriptions</span></li>
             </ul>
           </div>
