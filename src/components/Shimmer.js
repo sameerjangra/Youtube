@@ -6,7 +6,7 @@ const Shimmer = () => {
   const shimmerCards = new Array(10).fill(0);
 
   return (
-    <div className="flex flex-wrap ml-44">
+    <div className="flex flex-wrap ml-5">
       {shimmerCards.map((_, index) => (
         <div
           key={index}

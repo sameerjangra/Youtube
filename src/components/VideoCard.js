@@ -10,8 +10,8 @@ const VideoCard = ({ info, isMenuOpen }) => {
 
   const titleLength = isMenuOpen ? [38, 30] : [44, 30];
   const thumbnailQuality = isMenuOpen ? 'medium' : 'high';
-  const cardWidth = isMenuOpen ? 'w-96' : 'w-[430px]';
-  const imgHeight = isMenuOpen ? 'h-52' : 'h-60';
+  const cardWidth = isMenuOpen ? 'sm:w-96' : 'sm:w-[430px]';
+  const imgHeight = isMenuOpen ? 'sm:h-52' : 'sm:h-60';
 
   const [firstLine, secondLine] = formatTitle(title, ...titleLength);
   const formattedViews = formatViews(parseInt(statistics.viewCount, 10));
@@ -39,7 +39,7 @@ const VideoCard = ({ info, isMenuOpen }) => {
     <motion.div
       layout
       transition={{ duration: 0.4, ease: 'easeInOut' }}
-      className={`text-white ${cardWidth} p-2 mx-2 rounded-lg transform hover:scale-[101%] hover:shadow-2xl`}
+      className={`text-white ${cardWidth}  w-96 -ml-[90px] sm:ml-0 p-2 mx-2 rounded-lg transform hover:scale-[101%] hover:shadow-2xl `}
       style={{ '--hover-bg': hoverBgColor }}
     >
       <div

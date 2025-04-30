@@ -7,6 +7,8 @@ import Body from './components/Body';
 import MainContainer from './components/MainContainer';
 import WatchPage from './components/WatchPage';
 import SearchPage from './components/SearchPage';
+import Shorts from './components/Shorts';
+import Demo from './components/Demo';
 
 const AppLayout = () => {
   return (
@@ -35,9 +37,18 @@ const appRouter = createBrowserRouter([
             element: <WatchPage />,
           },
           {
+            path: 'shorts',
+            element: <Shorts />,
+          },
+          {
             path: 'search',
             element: <SearchPage />,
           },
+          {
+            path: 'demo',
+            element: <Demo/>,
+          },
+          
           {
             path: 'search/:query',
             element: <MainContainer />,

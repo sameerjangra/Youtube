@@ -35,17 +35,24 @@ const VideoContainer = () => {
   if (!videos || videos.length === 0) return <Shimmer />;
 
   return (
-    <div className="grid grid-cols-3 gap-4 px-4 py-2 transition-all duration-500">
-  {videos.map((video) => (
-    <Link
-      key={video.id.videoId || video.id}
-      to={`/watch?v=${video.id.videoId || video.id}`}
-      state={{ video }}
+    <div
+      className={`
+        flex sm:grid sm:grid-cols-3 sm:gap-4 px-4 py-2
+        overflow-x-auto no-scrollbar sm:overflow-visible
+        gap-4 sm:ml-0 sm:relative
+        -ml-4 sm:-ml-0 absolute sm:relative
+      `}
     >
-      <VideoCard info={video} isMenuOpen={isMenuOpen} />
-    </Link>
-  ))}
-</div>
+      {videos.map((video) => (
+        <Link
+          key={video.id.videoId || video.id}
+          to={`/watch?v=${video.id.videoId || video.id}`}
+          state={{ video }}
+        >
+          <VideoCard info={video} isMenuOpen={isMenuOpen} />
+        </Link>
+      ))}
+    </div>
   );
 };
 
