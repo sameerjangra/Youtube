@@ -6,6 +6,7 @@ import { FaPlusCircle } from "react-icons/fa";
 import { FaRegUserCircle } from "react-icons/fa";
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { MdHistory, MdVideoLibrary, MdWatchLater, MdThumbUp } from "react-icons/md";
 
 const Slidebar = () => {
   const isMenuOpen = useSelector((store) => store.app.isMenuOpen);
@@ -25,14 +26,15 @@ const Slidebar = () => {
           </div>
 
           <div className='mt-5'>
-            <p className='text-zinc-500 mb-3'>Library</p>
-            <ul className='space-y-3'>
-              <li className='flex items-center space-x-3'><span>History</span></li>
-              <li className='flex items-center space-x-3'><span>Your videos</span></li>
-              <li className='flex items-center space-x-3'><span>Watch Later</span></li>
-              <li className='flex items-center space-x-3'><span>Liked Videos</span></li>
-            </ul>
-          </div>
+  <p className='text-zinc-500 mb-3'>Library</p>
+  <ul className='space-y-3'>
+    <li className='flex items-center space-x-3'><MdHistory className="text-2xl" /><span>History</span></li>
+    <li className='flex items-center space-x-3'><MdVideoLibrary className="text-2xl" /><span>Your videos</span></li>
+    <li className='flex items-center space-x-3'><MdWatchLater className="text-2xl" /><span>Watch Later</span></li>
+    <li className='flex items-center space-x-3'><MdThumbUp className="text-2xl" /><span>Liked Videos</span></li>
+  </ul>
+</div>
+
         </div>
       )}
 

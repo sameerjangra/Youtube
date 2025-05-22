@@ -10,10 +10,8 @@ const VideoCard = ({ info, isMenuOpen }) => {
 
   const titleLength = isMenuOpen ? [38, 30] : [44, 30];
   const thumbnailQuality = isMenuOpen ? 'medium' : 'high';
-  const cardWidth = isMenuOpen ? 'sm:w-96' : 'sm:w-[430px]';
-  const imgHeight = isMenuOpen ? 'sm:h-52' : 'sm:h-60';
-
   const [firstLine, secondLine] = formatTitle(title, ...titleLength);
+
   const formattedViews = formatViews(parseInt(statistics.viewCount, 10));
   const publishedTimeAgo = formatTimeAgo(publishedAt);
 
@@ -39,29 +37,47 @@ const VideoCard = ({ info, isMenuOpen }) => {
     <motion.div
       layout
       transition={{ duration: 0.4, ease: 'easeInOut' }}
-      className={`text-white ${cardWidth}  w-96 -ml-[90px] sm:ml-0 p-2 mx-2 rounded-lg transform hover:scale-[101%] hover:shadow-2xl `}
+      className={`
+        text-white 
+        w-[91vw] sm:w-[300px] md:w-[350px] lg:w-[400px] 
+        p-2 mx-auto sm:mx-2 
+        rounded-lg transform 
+        hover:scale-[101%] hover:shadow-2xl
+      `}
       style={{ '--hover-bg': hoverBgColor }}
     >
       <div
         className="rounded-lg transition-colors duration-300"
         style={{ backgroundColor: 'transparent' }}
-        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = hoverBgColor)}
-        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
+        onMouseEnter={(e) => {
+          if (window.innerWidth >= 640) {
+            e.currentTarget.style.backgroundColor = hoverBgColor;
+          }
+        }}
+        onMouseLeave={(e) => {
+          if (window.innerWidth >= 640) {
+            e.currentTarget.style.backgroundColor = 'transparent';
+          }
+        }}
       >
         <motion.img
           layout
           ref={imgRef}
           crossOrigin="anonymous"
-          className={`rounded-md p-2 w-full object-cover ${imgHeight} transition-all duration-500 ease-in-out`}
+          className={`
+            rounded-md w-full object-cover 
+            h-[170px] sm:h-[180px] md:h-[200px] lg:h-[210px] 
+            transition-all duration-500 ease-in-out
+          `}
           src={thumbnails[thumbnailQuality].url}
           alt={title}
         />
         <div className="p-2">
-          <h4 className="font-bold pt-2">
+          <h4 className="font-bold text-sm sm:text-base pt-2 leading-snug">
             {firstLine}<br />{secondLine}
           </h4>
-          <p className="text-gray-400">{channelTitle}</p>
-          <p className="text-gray-400 text-sm">
+          <p className="text-gray-400 text-xs sm:text-sm">{channelTitle}</p>
+          <p className="text-gray-400 text-xs sm:text-sm">
             {formattedViews} • {publishedTimeAgo}
           </p>
         </div>

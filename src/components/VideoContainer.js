@@ -37,10 +37,9 @@ const VideoContainer = () => {
   return (
     <div
       className={`
-        flex sm:grid sm:grid-cols-3 sm:gap-4 px-4 py-2
-        overflow-x-auto no-scrollbar sm:overflow-visible
-        gap-4 sm:ml-0 sm:relative
-        -ml-4 sm:-ml-0 absolute sm:relative
+        px-4 py-2 
+        grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 
+        sm:ml-0 ml-0 mt-4
       `}
     >
       {videos.map((video) => (
@@ -54,6 +53,7 @@ const VideoContainer = () => {
       ))}
     </div>
   );
+  
 };
 
 export default VideoContainer;

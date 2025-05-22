@@ -73,7 +73,7 @@ const Head = () => {
           <img
             src={ytLogo}
             alt="YouTube Logo"
-            className="w-24 sm:w-36"
+            className="w-40 sm:w-36 -ml-8 md:ml-0"
           />
         </Link>
       </div>
@@ -141,7 +141,9 @@ const Head = () => {
           </button>
          
           <FaBell className='text-xl text-white cursor-pointer' />
-          <FaRegUserCircle className='text-2xl text-white cursor-pointer' />
+          <img 
+          className='w-10 h-10 rounded-full cursor-pointer object-cover'
+          src='https://i.pinimg.com/736x/05/a3/53/05a3537b6dfc7ca1e07e3c8d7c54c6f5.jpg'></img>
         </div>
       </div>
 
