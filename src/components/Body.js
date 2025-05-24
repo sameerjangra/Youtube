@@ -29,7 +29,7 @@ const Body = () => {
 
         {/* Main Content */}
         <div
-          className="flex-1 h-screen overflow-y-auto scrollbar-hide pb-16 sm:pb-0"
+          className="flex-1 h-screen overflow-y-auto scrollbar-hide pb-16 sm:pb-0 overflow-x-auto no-scrollbar"
           style={{
             marginLeft:
               !isWatchPage && window.innerWidth >= 640 && !isMenuOpen

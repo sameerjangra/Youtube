@@ -8,6 +8,9 @@ module.exports = {
       },
     },
   },
+  safelist: [
+    "scrollbar-hide",  // <- Add this line
+  ],
   plugins: [
     require('tailwind-scrollbar-hide'),
     require('@tailwindcss/line-clamp'),

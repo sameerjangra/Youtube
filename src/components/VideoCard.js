@@ -42,7 +42,7 @@ const VideoCard = ({ info, isMenuOpen }) => {
         w-[91vw] sm:w-[300px] md:w-[350px] lg:w-[400px] 
         p-2 mx-auto sm:mx-2 
         rounded-lg transform 
-        hover:scale-[101%] hover:shadow-2xl
+        hover:scale-[101%] hover:shadow-2xl 
       `}
       style={{ '--hover-bg': hoverBgColor }}
     >

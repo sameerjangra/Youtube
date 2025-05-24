@@ -39,7 +39,7 @@ const VideoContainer = () => {
       className={`
         px-4 py-2 
         grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 
-        sm:ml-0 ml-0 mt-4
+        sm:ml-0 ml-0 mt-4  overflow-x-auto no-scrollbar
       `}
     >
       {videos.map((video) => (

@@ -114,7 +114,7 @@ const WatchPage = () => {
           <h2 className="mt-3 text-lg font-semibold">{videoData?.snippet?.title}</h2>
 
           {/* Channel & Actions */}
-          <div className="flex justify-between items-center mt-4 flex-wrap gap-3">
+          <div className="flex justify-between items-center mt-4 flex-wrap gap-3 ">
             <div className="flex items-center gap-3">
               <img
                 src={channelData?.snippet?.thumbnails?.default?.url}
@@ -129,7 +129,7 @@ const WatchPage = () => {
               </div>
             </div>
 
-            <div className="flex gap-2 overflow-x-auto scrollbar-hide text-sm text-white">
+            <div className="flex gap-2 overflow-x-auto scrollbar-hide text-sm text-white no-scrollbar">
               <button onClick={handleLikeToggle} className="flex items-center px-3 py-1.5 bg-[#272727] rounded-full">
                 {liked ? <BiSolidLike className="mr-1 text-blue-400" /> : <BiLike className="mr-1" />}
                 {formatViews(videoData?.statistics?.likeCount || 0)}

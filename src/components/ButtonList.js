@@ -8,7 +8,7 @@ const ButtonList = () => {
   ];
 
   return (
-    <div className="flex overflow-x-auto scrollbar-hide whitespace-nowrap px-4 py-3 space-x-3 bg-customBlack shadow-md z-10">
+    <div className="flex scrollbar-hide whitespace-nowrap px-4 py-3 space-x-3 bg-customBlack shadow-md z-10 overflow-x-auto no-scrollbar">
       <button className="px-4  md:px-5 py-2 bg-white text-black text-sm md:text-base md:font-medium rounded-lg hover:bg-gray-200 transition">
         All
       </button>
