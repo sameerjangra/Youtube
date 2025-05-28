@@ -2,16 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { BiMenu } from "react-icons/bi";
 import { CiSearch } from "react-icons/ci";
 import { IoMdMic } from "react-icons/io";
-import { FaBell, FaRegUserCircle } from "react-icons/fa";
+import { FaBell } from "react-icons/fa";
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toogleMenu } from "../utils/appSlice";
 import { setSearchResults } from "../utils/searchSlice";
 import ytLogo from "../assets/ytlogo.png";
 import { YOUTUBE_SEARCH_SUGGESTION_API, YOUTUBE_SEARCH_API } from '../utils/Constant';
+import useDebounce from '../utils/useDebounce';
 
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const debouncedQuery = useDebounce(searchQuery);
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
@@ -20,15 +22,18 @@ const Head = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (searchQuery) getSearchSuggestions();
-    }, 300);
-    return () => clearTimeout(timer);
-  }, [searchQuery]);
+    if (debouncedQuery) {
+      getSearchSuggestions();
+    } else {
+      setSuggestions([]);
+      setShowSuggestions(false);
+    }
+  }, [debouncedQuery]);
 
   const getSearchSuggestions = async () => {
     try {
-      const response = await fetch(`${YOUTUBE_SEARCH_SUGGESTION_API}&q=${searchQuery}`);
+      // Adjust this URL based on how your constant is defined, add ?q= if needed
+      const response = await fetch(`${YOUTUBE_SEARCH_SUGGESTION_API}${debouncedQuery}`);
       const json = await response.json();
       setSuggestions(json[1] || []);
       setShowSuggestions(true);
@@ -142,8 +147,10 @@ const Head = () => {
          
           <FaBell className='text-xl text-white cursor-pointer' />
           <img 
-          className='w-10 h-10 rounded-full cursor-pointer object-cover'
-          src='https://i.pinimg.com/736x/05/a3/53/05a3537b6dfc7ca1e07e3c8d7c54c6f5.jpg'></img>
+            className='w-10 h-10 rounded-full cursor-pointer object-cover'
+            alt='User Avatar'
+            src='https://i.pinimg.com/736x/05/a3/53/05a3537b6dfc7ca1e07e3c8d7c54c6f5.jpg'
+          />
         </div>
       </div>
 
@@ -174,6 +181,7 @@ const Head = () => {
             </button>
             <button 
               type="button" 
+              aria-label="Close search"
               className="ml-2 text-white text-xl" 
               onClick={() => setShowMobileSearch(false)}
             >

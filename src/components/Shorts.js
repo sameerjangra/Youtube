@@ -175,7 +175,7 @@ const Shorts = () => {
             <button className="hover:scale-110 transition bg-zinc-600 p-2 sm:px-4 sm:py-4 rounded-full"><FaShare size={18} /></button>
             <button className="hover:scale-110 transition bg-zinc-600 p-3 sm:px-4 sm:py-4 rounded-full"><PiDotsThreeVerticalBold size={18} /></button>
           </div>
-        </div>
+        </div>  
       </div>
     ))}
   </div>

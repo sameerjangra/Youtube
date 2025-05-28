@@ -5,6 +5,9 @@ import { extractAverageColor } from '../utils/extractAverageColor';
 import { motion } from 'framer-motion';
 
 const VideoCard = ({ info, isMenuOpen }) => {
+
+ 
+
   const { snippet, statistics } = info;
   const { title, thumbnails, channelTitle, publishedAt } = snippet;
 
@@ -12,14 +15,19 @@ const VideoCard = ({ info, isMenuOpen }) => {
   const thumbnailQuality = isMenuOpen ? 'medium' : 'high';
   const [firstLine, secondLine] = formatTitle(title, ...titleLength);
 
-  const formattedViews = formatViews(parseInt(statistics.viewCount, 10));
+  const formattedViews = statistics?.viewCount
+  ? formatViews(parseInt(statistics.viewCount, 10))
+  : "Unknown views";
+
   const publishedTimeAgo = formatTimeAgo(publishedAt);
+  
 
   const imgRef = useRef(null);
   const [hoverBgColor, setHoverBgColor] = useState('#1f1f1f');
 
   useEffect(() => {
     const img = imgRef.current;
+    
     const handleImageLoad = () => {
       const color = extractAverageColor(img);
       setHoverBgColor(color);

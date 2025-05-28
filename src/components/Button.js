@@ -1,8 +1,12 @@
 import React from 'react';
 
-const Button = ({ name }) => {
+const Button = ({ name, onClick, isSelected }) => {
   return (
-    <button className="px-4 py-2 bg-zinc-800 text-white rounded-lg hover:bg-zinc-700 transition whitespace-nowrap">
+    <button
+      onClick={onClick}
+      className={`px-4 py-2 rounded-lg transition whitespace-nowrap 
+        ${isSelected ? 'bg-white text-black' : 'bg-zinc-800 text-white hover:bg-zinc-700'}`}
+    >
       {name}
     </button>
   );
