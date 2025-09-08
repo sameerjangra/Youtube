@@ -1,0 +1,197 @@
+import React, { useEffect, useState } from 'react';
+import { BiMenu } from "react-icons/bi";
+import { CiSearch } from "react-icons/ci";
+import { IoMdMic } from "react-icons/io";
+import { FaBell } from "react-icons/fa";
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { toogleMenu } from "../utils/appSlice";
+import { setSearchResults } from "../utils/searchSlice";
+import ytLogo from "../assets/ytlogo.png";
+import { YOUTUBE_SEARCH_SUGGESTION_API, YOUTUBE_SEARCH_API } from '../utils/Constant';
+import useDebounce from '../utils/useDebounce';
+
+const Head = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const debouncedQuery = useDebounce(searchQuery);
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (debouncedQuery) {
+      getSearchSuggestions();
+    } else {
+      setSuggestions([]);
+      setShowSuggestions(false);
+    }
+  }, [debouncedQuery]);
+
+  const getSearchSuggestions = async () => {
+    try {
+      // Adjust this URL based on how your constant is defined, add ?q= if needed
+      const response = await fetch(`${YOUTUBE_SEARCH_SUGGESTION_API}${debouncedQuery}`);
+      const json = await response.json();
+      setSuggestions(json[1] || []);
+      setShowSuggestions(true);
+    } catch (error) {
+      console.error("Error fetching suggestions:", error);
+    }
+  };
+
+  const searchQueryResult = async (query) => {
+    const trimmedQuery = query.trim();
+    if (!trimmedQuery) {
+      navigate('/');
+      return;
+    }
+
+    try {
+      const response = await fetch(`${YOUTUBE_SEARCH_API}&q=${trimmedQuery}`);
+      const json = await response.json();
+      dispatch(setSearchResults(json.items));
+      navigate('/search');
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+    }
+  };
+
+  const toogleMenuHandler = () => {
+    dispatch(toogleMenu());
+  };
+
+  return (
+    <div className="flex items-center justify-between px-4 py-2 bg-customBlack shadow-md sticky top-0 z-50 relative">
+      
+      {/* Left Section */}
+      <div className='flex items-center space-x-4'>
+        {/* Menu icon only on desktop */}
+        <BiMenu
+          className='text-3xl text-white cursor-pointer hidden sm:block'
+          onClick={toogleMenuHandler}
+        />
+        {/* Logo */}
+        <Link to={"/"}>
+          <img
+            src={ytLogo}
+            alt="YouTube Logo"
+            className="w-40 sm:w-36 -ml-8 md:ml-0"
+          />
+        </Link>
+      </div>
+
+      {/* Center - Desktop search input only */}
+      <div className="relative flex-grow justify-center hidden sm:flex">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            searchQueryResult(searchQuery);
+          }}
+          className="flex w-full max-w-2xl"
+        >
+          <input
+            type="text"
+            className="w-full p-2 px-4 text-white bg-[#121212] border border-gray-600 rounded-l-full outline-none focus:ring-1 focus:ring-blue-500"
+            placeholder="Search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onFocus={() => setShowSuggestions(true)}
+            onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
+          />
+          <button
+            type="submit"
+            className="w-14 bg-[#303030] border border-l-0 border-gray-600 rounded-r-full flex items-center justify-center"
+          >
+            <CiSearch className="text-white text-xl" />
+          </button>
+        </form>
+
+        <button className="ml-2 p-2 rounded-full bg-[#303030] text-white">
+          <IoMdMic className="text-lg m-1" />
+        </button>
+
+        {showSuggestions && suggestions.length > 0 && (
+          <ul className="absolute top-12 bg-[#1f1f1f] w-full max-w-2xl rounded-md shadow-lg text-white text-sm overflow-hidden -ml-10 z-50">
+            {suggestions.map((s, index) => (
+              <li
+                key={index}
+                className="px-2 py-2 hover:bg-[#3d3d3d] cursor-pointer flex items-center space-x-2"
+                onMouseDown={() => {
+                  setSearchQuery(s);
+                  searchQueryResult(s);
+                }}
+              >
+                <CiSearch className='mx-2 text-xl' /> {s}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      {/* Right - Mobile: Search icon only */}
+      <div className="flex items-center space-x-4">
+        {/* Mobile search icon */}
+        <CiSearch
+          className="text-white text-2xl block sm:hidden"
+          onClick={() => setShowMobileSearch(true)}
+        />
+
+        {/* Desktop only icons */}
+        <div className="hidden sm:flex items-center space-x-4">
+          <button className='hidden sm:inline px-4 py-3 bg-[#303030] text-white rounded-full text-sm'>
+            + Create
+          </button>
+         
+          <FaBell className='text-xl text-white cursor-pointer' />
+          <img 
+            className='w-10 h-10 rounded-full cursor-pointer object-cover'
+            alt='User Avatar'
+            src='https://i.pinimg.com/736x/05/a3/53/05a3537b6dfc7ca1e07e3c8d7c54c6f5.jpg'
+          />
+        </div>
+      </div>
+
+      {/* Mobile Fullscreen Search UI */}
+      {showMobileSearch && (
+        <div className="absolute inset-0 bg-[#121212] flex items-center px-4 z-50 sm:hidden">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              searchQueryResult(searchQuery);
+              setShowMobileSearch(false);
+            }}
+            className="flex w-full"
+          >
+            <input
+              autoFocus
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full p-2 px-4 text-white bg-[#1f1f1f] border border-gray-600 rounded-l-full outline-none"
+              placeholder="Search"
+            />
+            <button
+              type="submit"
+              className="w-14 bg-[#303030] border border-l-0 border-gray-600 rounded-r-full flex items-center justify-center"
+            >
+              <CiSearch className="text-white text-xl" />
+            </button>
+            <button 
+              type="button" 
+              aria-label="Close search"
+              className="ml-2 text-white text-xl" 
+              onClick={() => setShowMobileSearch(false)}
+            >
+              ✖
+            </button>
+          </form>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Head;

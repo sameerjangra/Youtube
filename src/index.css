@@ -1,0 +1,36 @@
+/* Make scrollbar visible on hover */
+.scrollbar-container {
+  scrollbar-width: auto;
+}
+
+.scrollbar-container::-webkit-scrollbar {
+  height: 8px;
+  background: transparent;
+}
+
+.scrollbar-container:hover::-webkit-scrollbar {
+  background: #0F0F0F; /* Your customBlack color */
+}
+
+.scrollbar-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.scrollbar-container:hover::-webkit-scrollbar-thumb {
+  background: #555;
+}
+.line-clamp-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limit text to 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  max-height: 3.2em; /* Adjust based on font size */
+  line-height: 1.6em; /* Ensures two lines before ellipsis */
+}
+
+html, body {
+  overflow: hidden; /* Prevent double scroll */
+}
